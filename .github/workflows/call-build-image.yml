@@ -1,9 +1,13 @@
 name: Build Image On Release
 
 on:
+  workflow_dispatch:
   release:
     types: [ published ]
   pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   call-workflow:
