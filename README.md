@@ -25,7 +25,6 @@ The architectures supported by this image are:
 | :----: | :----: | ---- |
 | x86-64 | ✅ | latest |
 | arm64 | ✅ | latest |
-| armhf | ❌ | latest |
 
 ## Application Setup
 
@@ -184,4 +183,5 @@ docker build \
 
 ## Versions
 
+* **30.12.23:** - Rebase to Alpine 3.19.
 * **04.09.23:** - Initial Release.
