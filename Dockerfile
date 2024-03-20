@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/baseimage-alpine:3.18
+FROM ghcr.io/linuxserver/baseimage-alpine:3.18 as buildstage
 
 # set version label
 ARG BUILD_DATE
@@ -33,28 +33,37 @@ RUN \
   mkdir -p /build && \
   curl -o \
     /tmp/planka.tar.gz -L \
-    "https://github.com/plankanban/planka/archive/refs/tags/${APP_VERSION}.tar.gz" && \
+    "https://github.com/plankanban/planka/archive/${APP_VERSION}.tar.gz" && \
   tar xf \
     /tmp/planka.tar.gz -C \
     /build --strip-components=1 && \
   cd /build/server && \
-  npm clean-install --omit=dev && \
+  npm install pnpm --global && \
+  pnpm import && \
+  pnpm install --prod && \
   cd /build/client && \
-  npm clean-install --omit=dev && \
+  pnpm import && \
+  pnpm install --prod && \
   DISABLE_ESLINT_PLUGIN=true npm run build && \
-  mv /build/server/* /app && \
-  mv /build/server/.env.sample /app/.env && \
-  mv /build/server/.sailsrc /app/.sailsrc && \
-  mv /build/client/build/* /app/public && \
-  mv /app/public/index.html /app/views/index.ejs && \
   echo "**** cleanup ****" && \
   apk del --purge \
     build-dependencies && \
   rm -rf \
     $HOME/.cache \
+    $HOME/.local \
     $HOME/.npm \
-    /tmp/* \
-    /build
+    /tmp/*
+
+FROM ghcr.io/linuxserver/baseimage-alpine:3.19
+
+RUN \
+  apk add  --no-cache \
+    nodejs
+
+COPY --from=buildstage /build/server/ /app
+COPY --from=buildstage /build/server/.env.sample /app/.env
+COPY --from=buildstage /build/client/build/* /app/public/
+COPY --from=buildstage /build/client/build/index.html /app/views/index.ejs
 
 # copy local files
 COPY root/ /
