@@ -28,8 +28,6 @@ RUN \
     APP_VERSION=$(curl -s https://api.github.com/repos/plankanban/planka/releases/latest \
     | awk '/tag_name/{print $4;exit}' FS='[""]'); \
   fi && \
-  mkdir -p /app/public && \
-  mkdir -p /app/views && \
   mkdir -p /build && \
   curl -o \
     /tmp/planka.tar.gz -L \
@@ -62,7 +60,7 @@ RUN \
 
 COPY --from=buildstage /build/server/ /app
 COPY --from=buildstage /build/server/.env.sample /app/.env
-COPY --from=buildstage /build/client/build/* /app/public/
+COPY --from=buildstage /build/client/build /app/public/
 COPY --from=buildstage /build/client/build/index.html /app/views/index.ejs
 
 # copy local files
