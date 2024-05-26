@@ -6,11 +6,6 @@ FROM ghcr.io/linuxserver/baseimage-alpine:3.18 as buildstage
 ARG BUILD_DATE
 ARG VERSION
 ARG APP_VERSION
-LABEL build_version="Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="thespad"
-LABEL org.opencontainers.image.source="https://github.com/thespad/docker-planka"
-LABEL org.opencontainers.image.url="https://github.com/thespad/docker-planka"
-LABEL org.opencontainers.image.description="Elegant open source project tracking."
 
 RUN \
   echo "**** install packages ****" && \
@@ -52,11 +47,22 @@ RUN \
     $HOME/.npm \
     /tmp/*
 
-FROM ghcr.io/linuxserver/baseimage-alpine:3.19
+FROM ghcr.io/linuxserver/baseimage-alpine:3.20
+
+ARG BUILD_DATE
+ARG VERSION
+ARG APP_VERSION
+LABEL build_version="Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+LABEL maintainer="thespad"
+LABEL org.opencontainers.image.source="https://github.com/thespad/docker-planka"
+LABEL org.opencontainers.image.url="https://github.com/thespad/docker-planka"
+LABEL org.opencontainers.image.description="Elegant open source project tracking."
+LABEL org.opencontainers.image.authors="thespad"
 
 RUN \
   apk add  --no-cache \
-    nodejs
+    nodejs && \
+  printf "Version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version
 
 COPY --from=buildstage /build/server/ /app
 COPY --from=buildstage /build/server/.env.sample /app/.env

@@ -7,9 +7,9 @@
 [![GitHub Stars](https://img.shields.io/github/stars/thespad/docker-planka.svg?color=26689A&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/thespad/docker-planka)
 [![Docker Stars](https://img.shields.io/docker/stars/thespad/planka.svg?color=26689A&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=stars&logo=docker)](https://hub.docker.com/r/thespad/planka)
 
-[![ci](https://img.shields.io/github/actions/workflow/status/thespad/docker-planka/call-check-and-release.yml?branch=main&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github&label=Check%20For%20Upstream%20Updates)](https://github.com/thespad/docker-planka/actions/workflows/call-check-and-release.yml)
-[![ci](https://img.shields.io/github/actions/workflow/status/thespad/docker-planka/call-baseimage-update.yml?branch=main&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github&label=Check%20For%20Baseimage%20Updates)](https://github.com/thespad/docker-planka/actions/workflows/call-baseimage-update.yml)
-[![ci](https://img.shields.io/github/actions/workflow/status/thespad/docker-planka/call-build-image.yml?labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github&label=Build%20Image)](https://github.com/thespad/docker-planka/actions/workflows/call-build-image.yml)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/thespad/docker-planka/call-check-and-release.yml?branch=main&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github&label=Check%20For%20Upstream%20Updates)](https://github.com/thespad/docker-planka/actions/workflows/call-check-and-release.yml)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/thespad/docker-planka/call-baseimage-update.yml?branch=main&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github&label=Check%20For%20Baseimage%20Updates)](https://github.com/thespad/docker-planka/actions/workflows/call-baseimage-update.yml)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/thespad/docker-planka/call-build-image.yml?labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github&label=Build%20Image)](https://github.com/thespad/docker-planka/actions/workflows/call-build-image.yml)
 
 [Planka](https://github.com/plankanban/planka/) is an elegant open source project tracking tool.
 
@@ -51,7 +51,6 @@ Compatible with docker-compose v2 schemas.
 
 ```yaml
 ---
-version: "2.1"
 services:
   planka:
     image: ghcr.io/thespad/planka:latest
@@ -65,7 +64,7 @@ services:
       - DATABASE_URL=postgresql://user:password@planka-db/planka
       - SECRET_KEY=abc123
     volumes:
-      - /path/to/appdata/config:/config
+      - /path/to/planka/config:/config
     ports:
       - 1337:1337
     restart: unless-stopped
@@ -84,7 +83,7 @@ docker run -d \
   -e DATABASE_URL=postgresql://user:password@planka-db/planka \
   -e SECRET_KEY=abc123 \
   -p 1337:1337 \
-  -v /path/to/appdata/config:/config \
+  -v /path/to/planka/config:/config \
   --restart unless-stopped \
   ghcr.io/thespad/planka
 ```
@@ -181,5 +180,6 @@ docker build \
 
 ## Versions
 
+* **26.05.24:** - Rebase to Alpine 3.20.
 * **17.03.24:** - Rebase to Alpine 3.19.
 * **04.09.23:** - Initial Release.
