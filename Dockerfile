@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/baseimage-alpine:3.18 as buildstage
+FROM ghcr.io/linuxserver/baseimage-alpine:3.20 as buildstage
 
 # set version label
 ARG BUILD_DATE
@@ -9,15 +9,16 @@ ARG APP_VERSION
 
 RUN \
   echo "**** install packages ****" && \
-  apk add  --no-cache --virtual=build-dependencies \
-    build-base \
-    npm \
-    python3-dev && \
   apk add  --no-cache \
     giflib \
     libgsf \
     nodejs \
     vips && \
+  apk add  --no-cache --virtual=build-dependencies \
+    build-base \
+    npm \
+    py3-setuptools \
+    python3-dev && \
   echo "**** install planka ****" && \
   if [ -z ${APP_VERSION+x} ]; then \
     APP_VERSION=$(curl -s https://api.github.com/repos/plankanban/planka/releases/latest \
