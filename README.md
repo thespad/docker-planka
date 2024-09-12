@@ -11,6 +11,10 @@
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/thespad/docker-planka/call-baseimage-update.yml?branch=main&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github&label=Check%20For%20Baseimage%20Updates)](https://github.com/thespad/docker-planka/actions/workflows/call-baseimage-update.yml)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/thespad/docker-planka/call-build-image.yml?labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github&label=Build%20Image)](https://github.com/thespad/docker-planka/actions/workflows/call-build-image.yml)
 
+## DEPRECATION NOTICE
+
+This image is deprecated. We will not offer support for this image and it will not be updated. We recommend switching to the [Linuxserver Planka image](https://github.com/linuxserver/docker-planka).
+
 [Planka](https://github.com/plankanban/planka/) is an elegant open source project tracking tool.
 
 ## Supported Architectures
@@ -180,6 +184,7 @@ docker build \
 
 ## Versions
 
+* **12.09.24:** - Deprecate.
 * **26.05.24:** - Rebase to Alpine 3.20.
 * **17.03.24:** - Rebase to Alpine 3.19.
 * **04.09.23:** - Initial Release.
